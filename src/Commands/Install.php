@@ -11,7 +11,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'easyCrud:install';
+    protected $signature = 'easy-crud:install';
 
     /**
      * The console command description.
