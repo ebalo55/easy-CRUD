@@ -2,6 +2,7 @@
 
 namespace Ebalo\EasyCRUD;
 
+use Ebalo\EasyCRUD\Commands\Install;
 use Illuminate\Support\ServiceProvider;
 
 class EasyCRUDServiceProvider extends ServiceProvider
@@ -40,7 +41,9 @@ class EasyCRUDServiceProvider extends ServiceProvider
             ], 'lang');*/
 
             // Registering package commands.
-            // $this->commands([]);
+            $this->commands([
+                Install::class
+            ]);
         }
     }
 

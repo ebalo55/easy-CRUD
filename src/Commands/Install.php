@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Ebalo\EasyCRUD\Commands;
 
 use Illuminate\Console\Command;
 
