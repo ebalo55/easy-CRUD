@@ -3,7 +3,9 @@
     "description": "",
     "keywords": [
         "ebalo",
-        "easycrud"
+        "easycrud",
+        "crud",
+        "laravel"
     ],
     "homepage": "https://github.com/ebalo/easycrud",
     "license": "MIT",
@@ -31,16 +33,7 @@
             "src/crud.php"
         ]
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Ebalo\\EasyCRUD\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
-    },
+    "scripts": {},
     "config": {
         "sort-packages": true
     },

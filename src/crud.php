@@ -23,18 +23,18 @@ if(!function_exists("CRUD")) {
      *      Route::delete("/delete/{category}", [CategoryController::class, "destroy"])->name("categories-delete");
      * });
      *
-     * @param string $prefix The route prefix, all routes will start with this prefix
-     * @param string $controller The controller name as retrieved from the ::class method
+     * @param string $path_prefix Route path prefix, all routes will start with this prefix
+     * @param string $controller Controller name as retrieved from the ::class method
      * @param string $name_prefix The routes name prefix, used for routes identification
-     * @param string $parameter_name The parameter of the routes which requires one
-     * @param array $functionalities An array of the crud endpoints to register, defaults to:
+     * @param string $parameter_name Parameter name of the routes which requires one
+     * @param array $functionalities An array of the crud functionalities to register, defaults to:
      *  ["create" => true, "read" => true, "update" => true, "delete" => true]
-     * @param array $functions An array of the functions of the controller to assign to each endpoint, defaults to:
+     * @param array $functions Array of function name present on the controller, this will be used to run the chosen method, defaults to:
      *  ["list" => "index", "read" => "show", "create" => "create", "store" => "store", "edit" => "edit", "update" => "update", "delete" => "destroy"]
      * @throws Exception
      */
     function CRUD(
-        string $prefix,
+        string $path_prefix,
         string $controller,
         string $name_prefix,
         string $parameter_name,
@@ -58,7 +58,7 @@ if(!function_exists("CRUD")) {
             throw new
                 Exception('The functions array must include the "list", "read", "create", "store", "edit", "update", "delete" elements.');
         }
-        if(is_null($prefix)) {
+        if(is_null($path_prefix)) {
             throw new Exception('The prefix cannot be null.');
         }
         if(is_null($controller) && !empty($controller)) {
@@ -72,8 +72,8 @@ if(!function_exists("CRUD")) {
         }
 
         // Register the actual routes
-        Route::prefix("/$prefix")->group(
-            function() use($prefix, $controller, $name_prefix, $parameter_name, $functionalities, $functions) {
+        Route::prefix("/$path_prefix")->group(
+            function() use($controller, $name_prefix, $parameter_name, $functionalities, $functions) {
                 // If reading endpoints are required register them
                 if($functionalities["read"]) {
                     Route::get("/", [$controller, $functions["list"]])->name("$name_prefix-index");
@@ -103,18 +103,18 @@ if(!function_exists("CRUD")) {
 if(!function_exists("easyCrud")) {
     /**
      * Perform a basic crud operation.
-     * It will do in this order:
+     * It proceed with the following order:
      * - validate the provided request with the given rules;
      *      - return back with the list of validation errors if any
      * - run the given method on the given model with the validated parameters
      * - redirect to the successful_redirect route with a "state" flag with a "confirmed" value
      *
-     * @param object|null $caller
-     * @param Request|null $request
-     * @param array $rules
-     * @param string|object $model
-     * @param string $method
-     * @param string $successful_redirect
+     * @param object|null $caller The caller object, inside a class this field is populated with $this
+     * @param Request|null $request Request object to validate
+     * @param array $rules Associative array of laravel rules
+     * @param string|object $model Model class or object to work on
+     * @param string $method Method to run on the model
+     * @param string $successful_redirect Route name to redirect the request if successful
      * @return RedirectResponse
      */
     function easyCrud(object|null $caller, Request|null $request, array $rules, string|object $model, string $method, string $successful_redirect): RedirectResponse
@@ -158,13 +158,14 @@ if(!function_exists("easyCrud")) {
 
 if(!function_exists("easyStore")) {
     /**
-     * Preformatted shortcut for the store procedure, it routes the formatted request to easyCrud
+     * Create a new instance of the given model with the given parameters.
+     * This is a preformatted shortcut for the store procedure, it routes the formatted request to easyCrud.
      *
-     * @param object $caller
-     * @param Request $request
-     * @param array $rules
-     * @param string $model
-     * @param string $successful_redirect
+     * @param object $caller The caller object, inside a class this field is populated with $this
+     * @param Request $request Request object to validate
+     * @param array $rules Associative array of laravel rules
+     * @param string $model Model class to create
+     * @param string $successful_redirect Route name to redirect the request if successful
      * @return RedirectResponse
      */
     function easyStore(object $caller, Request $request, array $rules, string $model, string $successful_redirect): RedirectResponse
@@ -175,13 +176,14 @@ if(!function_exists("easyStore")) {
 
 if(!function_exists("easyUpdate")) {
     /**
-     * Preformatted shortcut for the update procedure, it routes the formatted request to easyCrud
+     * Update an existing instance of the given model with the given parameters.
+     * This is a preformatted shortcut for the update procedure, it routes the formatted request to easyCrud.
      *
-     * @param object $caller
-     * @param Request $request
-     * @param array $rules
-     * @param object $model
-     * @param string $successful_redirect
+     * @param object $caller The caller object, inside a class this field is populated with $this
+     * @param Request $request Request object to validate
+     * @param array $rules Associative array of laravel rules
+     * @param object $model Model object to update
+     * @param string $successful_redirect Route name to redirect the request if successful
      * @return RedirectResponse
      */
     function easyUpdate(object $caller, Request $request, array $rules, object $model, string $successful_redirect): RedirectResponse
@@ -192,10 +194,11 @@ if(!function_exists("easyUpdate")) {
 
 if(!function_exists("easyDelete")) {
     /**
-     * Preformatted shortcut for the delete procedure, it routes the formatted request to easyCrud
+     * Delete an existing instance of the given model.
+     * This is a preformatted shortcut for the delete procedure, it routes the formatted request to easyCrud.
      *
-     * @param object $model
-     * @param string $successful_redirect
+     * @param object $model Model object to delete
+     * @param string $successful_redirect Route name to redirect the request if successful
      * @return RedirectResponse
      */
     function easyDelete(object $model, string $successful_redirect): RedirectResponse
@@ -206,7 +209,8 @@ if(!function_exists("easyDelete")) {
 
 if(!function_exists("dropUniquenessRule")) {
     /**
-     * Drop all uniqueness rules withing the given array of rules
+     * Drop all uniqueness rules withing the given array of rules, this function is particularly useful in update
+     * phases in order to reuse the same rules array.
      * @param array $rules
      * @return array
      */

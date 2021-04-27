@@ -11,16 +11,16 @@ trait EasyCRUD
 
 	/**
 	 * Perform a basic crud operation.
-	 * It will do in this order:
+	 * It proceed with the following order:
 	 * - validate the provided request with the given rules;
 	 *      - return back with the list of validation errors if any
 	 * - run the given method on the given model with the validated parameters
 	 * - redirect to the successful_redirect route with a "state" flag with a "confirmed" value
 	 *
-	 * @param Request|null $request Request to start validate
-	 * @param string|object $model Model on which to execute the action
-	 * @param string $method Action to execute on the model
-	 * @param string $successful_redirect Route to redirect if everything is ok
+	 * @param Request|null $request Request object to validate
+	 * @param string|object $model Model class or object to work on
+	 * @param string $method Method to run on the model
+	 * @param string $successful_redirect Route name to redirect the request if successful
 	 * @return RedirectResponse
 	 */
 	public function easyCrud(Request|null $request, string|object $model, string $method, string $successful_redirect): RedirectResponse
@@ -36,11 +36,12 @@ trait EasyCRUD
 	}
 
 	/**
-	 * Preformatted shortcut for the store procedure, it routes the formatted request to easyCrud
+	 * Create a new instance of the given model with the given parameters.
+	 * This is a preformatted shortcut for the store procedure, it routes the formatted request to easyCrud.
 	 *
-	 * @param Request $request
-	 * @param string $model
-	 * @param string $successful_redirect
+	 * @param Request $request Request object to validate
+	 * @param string $model Model class to create
+	 * @param string $successful_redirect Route name to redirect the request if successful
 	 * @return RedirectResponse
 	 */
 	public function easyStore(Request $request, string $model, string $successful_redirect): RedirectResponse
@@ -54,11 +55,12 @@ trait EasyCRUD
 	}
 
 	/**
-	 * Preformatted shortcut for the update procedure, it routes the formatted request to easyCrud
+	 * Update an existing instance of the given model with the given parameters.
+	 * This is a preformatted shortcut for the update procedure, it routes the formatted request to easyCrud.
 	 *
-	 * @param Request $request
-	 * @param object $model
-	 * @param string $successful_redirect
+	 * @param Request $request Request object to validate
+	 * @param object $model Model object to update
+	 * @param string $successful_redirect Route name to redirect the request if successful
 	 * @return RedirectResponse
 	 */
 	public function easyUpdate(Request $request, object $model, string $successful_redirect): RedirectResponse
@@ -72,10 +74,11 @@ trait EasyCRUD
 	}
 
 	/**
-	 * Preformatted shortcut for the delete procedure, it routes the formatted request to easyCrud
+	 * Delete an existing instance of the given model.
+	 * This is a preformatted shortcut for the delete procedure, it routes the formatted request to easyCrud.
 	 *
-	 * @param object $model
-	 * @param string $successful_redirect
+	 * @param object $model Model object to delete
+	 * @param string $successful_redirect Route name to redirect the request if successful
 	 * @return RedirectResponse
 	 */
 	public function easyDelete(object $model, string $successful_redirect): RedirectResponse
