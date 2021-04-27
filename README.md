@@ -238,10 +238,10 @@ use App\Http\Controllers\CategoryController;
 // ...
 
 CRUD(
-	"categories",                   // Route path prefix
-	CategoryController::class,      // Controller class to call
-	"category",                     // Route name prefix
-	"category"                     // Parameter name for the routes that requires one
+    "categories",                   // Route path prefix
+    CategoryController::class,      // Controller class to call
+    "category",                     // Route name prefix
+    "category"                     // Parameter name for the routes that requires one
 );
 // ...
 ```
@@ -275,16 +275,16 @@ use App\Http\Controllers\CategoryController;
 // ...
 
 CRUD(
-	"categories",                   // Route path prefix
-	CategoryController::class,      // Controller class to call
-	"categories",                   // Route name prefix
-	"category",                     // Parameter name for the routes that requires one
-	[                               // Array of crud functionalities to register
-	    "create" => true,           // Register the creation endpoints
-	    "read" => false,            // Don't register the reading endpoints
-	    "update" => false,          // Don't register the updating endpoints
-	    "delete" => true           // Don't register the deletion endpoints
-	]
+    "categories",                   // Route path prefix
+    CategoryController::class,      // Controller class to call
+    "categories",                   // Route name prefix
+    "category",                     // Parameter name for the routes that requires one
+    [                               // Array of crud functionalities to register
+        "create" => true,           // Register the creation endpoints
+        "read" => false,            // Don't register the reading endpoints
+        "update" => false,          // Don't register the updating endpoints
+        "delete" => true           // Don't register the deletion endpoints
+    ]
 );
 // ...
 ```
@@ -312,17 +312,17 @@ use App\Http\Controllers\CategoryController;
 // ...
 
 CRUD(
-	"categories",                   // Route path prefix
-	CategoryController::class,      // Controller class to call
-	"categories",                   // Route name prefix
-	"category",                     // Parameter name for the routes that requires one
-	[                               // Array of crud functionalities to register
-	    "create" => true,           // Register the creation endpoints
-	    "read" => false,            // Don't register the reading endpoints
-	    "update" => false,          // Don't register the updating endpoints
-	    "delete" => false            // Don't register the deletion endpoints
-	],
-	$functions = [
+    "categories",                   // Route path prefix
+    CategoryController::class,      // Controller class to call
+    "categories",                   // Route name prefix
+    "category",                     // Parameter name for the routes that requires one
+    [                               // Array of crud functionalities to register
+        "create" => true,           // Register the creation endpoints
+        "read" => false,            // Don't register the reading endpoints
+        "update" => false,          // Don't register the updating endpoints
+        "delete" => false            // Don't register the deletion endpoints
+    ],
+    $functions = [
         "list" => "list_function",
         "read" => "read_function",
         "create" => "creation_function",
