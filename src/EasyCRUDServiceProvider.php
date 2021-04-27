@@ -51,10 +51,5 @@ class EasyCRUDServiceProvider extends ServiceProvider
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'easycrud');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('easycrud', function () {
-            return new EasyCRUD;
-        });
     }
 }
