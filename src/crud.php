@@ -74,17 +74,17 @@ if(!function_exists("CRUD")) {
         // Register the actual routes
         Route::prefix("/$path_prefix")->group(
             function() use($controller, $name_prefix, $parameter_name, $functionalities, $functions) {
-                // If reading endpoints are required register them
-                if($functionalities["read"]) {
-                    Route::get("/", [$controller, $functions["list"]])->name("$name_prefix-index");
-                    Route::get("/{{$parameter_name}}", [$controller, $functions["read"]])->name("$name_prefix-show");
-                }
-
                 // If creation endpoints are required register them
                 if($functionalities["create"]) {
                     Route::get("/create", [$controller, $functions["create"]])->name("$name_prefix-create");
                     Route::post("/create", [$controller, $functions["store"]])->name("$name_prefix-store");
                 }
+
+	            // If reading endpoints are required register them
+	            if($functionalities["read"]) {
+		            Route::get("/", [$controller, $functions["list"]])->name("$name_prefix-index");
+		            Route::get("/{{$parameter_name}}", [$controller, $functions["read"]])->name("$name_prefix-show");
+	            }
 
                 // If editing endpoints are required register them
                 if($functionalities["update"]) {
