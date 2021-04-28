@@ -28,7 +28,7 @@ trait EasyCRUD
 		return easyCrud(
 			$this,
 			$request,
-			$method === "update" ? dropUniquenessRule($this->rules) : $this->rules,
+			$method === "update" ? dropUniquenessRule($this->rules) : ($method === "delete" ? [] : $this->rules),
 			$model,
 			$method,
 			$successful_redirect
